@@ -65,59 +65,61 @@ const leadFormClassName = ['lead-form', sectionVariant.className, 'lead-form--co
   </form>
 
   <script>
-    const forms = document.querySelectorAll('[data-lead-form]');
+    (() => {
+      const forms = document.querySelectorAll('[data-lead-form]');
 
-    forms.forEach((form) => {
-      if (!(form instanceof HTMLFormElement)) return;
+      forms.forEach((form) => {
+        if (!(form instanceof HTMLFormElement)) return;
 
-      const status = form.querySelector<HTMLElement>('[data-form-status]');
-      const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-      const defaultSubmitLabel = submit instanceof HTMLButtonElement ? submit.textContent || '' : '';
-      const loadingMessage = form.dataset.loadingMessage || 'Проверяем форму…';
-      const stubMessage =
-        form.dataset.localSuccessMessage ||
-        form.dataset.successMessage ||
-        'Форма пока не подключена. Свяжитесь с владельцем сайта удобным способом.';
-      const invalidMessage = 'Проверьте обязательные поля.';
+        const status = form.querySelector<HTMLElement>('[data-form-status]');
+        const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+        const defaultSubmitLabel = submit instanceof HTMLButtonElement ? submit.textContent || '' : '';
+        const loadingMessage = form.dataset.loadingMessage || 'Проверяем форму…';
+        const stubMessage =
+          form.dataset.localSuccessMessage ||
+          form.dataset.successMessage ||
+          'Форма пока не подключена. Свяжитесь с владельцем сайта удобным способом.';
+        const invalidMessage = 'Проверьте обязательные поля.';
 
-      type LeadFormState = 'idle' | 'loading' | 'success' | 'error';
+        type LeadFormState = 'idle' | 'loading' | 'success' | 'error';
 
-      const setStatus = (state: LeadFormState, message: string) => {
-        form.dataset.state = state;
-        form.setAttribute('aria-busy', state === 'loading' ? 'true' : 'false');
+        const setStatus = (state: LeadFormState, message: string) => {
+          form.dataset.state = state;
+          form.setAttribute('aria-busy', state === 'loading' ? 'true' : 'false');
 
-        if (status instanceof HTMLElement) {
-          status.textContent = message;
-        }
-      };
+          if (status instanceof HTMLElement) {
+            status.textContent = message;
+          }
+        };
 
-      const setSubmitLoading = (loading: boolean) => {
-        if (submit instanceof HTMLButtonElement) {
-          submit.disabled = loading;
-          submit.dataset.loading = loading ? 'true' : 'false';
-        }
-      };
+        const setSubmitLoading = (loading: boolean) => {
+          if (submit instanceof HTMLButtonElement) {
+            submit.disabled = loading;
+            submit.dataset.loading = loading ? 'true' : 'false';
+          }
+        };
 
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
 
-        if (!form.checkValidity()) {
+          if (!form.checkValidity()) {
+            setSubmitLoading(false);
+            setStatus('error', invalidMessage);
+            form.reportValidity();
+            return;
+          }
+
+          setSubmitLoading(true);
+          setStatus('loading', loadingMessage);
+
+          setStatus('success', stubMessage);
+          form.reset();
           setSubmitLoading(false);
-          setStatus('error', invalidMessage);
-          form.reportValidity();
-          return;
-        }
-
-        setSubmitLoading(true);
-        setStatus('loading', loadingMessage);
-
-        setStatus('success', stubMessage);
-        form.reset();
-        setSubmitLoading(false);
-        if (submit instanceof HTMLButtonElement) {
-          submit.textContent = defaultSubmitLabel;
-        }
+          if (submit instanceof HTMLButtonElement) {
+            submit.textContent = defaultSubmitLabel;
+          }
+        });
       });
-    });
+    })();
   </script>
 </section>

@@ -46,30 +46,32 @@ const burgerClassName = ['site-header__burger', burgerVariant.className].filter(
 </header>
 {transparentScrollMode && (
   <script>
-    const header = document.getElementById('main-header');
-    let headerFrameRequested = false;
+    (() => {
+      const header = document.getElementById('main-header');
+      let headerFrameRequested = false;
 
-    const syncHeaderState = () => {
-      headerFrameRequested = false;
+      const syncHeaderState = () => {
+        headerFrameRequested = false;
 
-      if (!(header instanceof HTMLElement)) {
-        return;
-      }
+        if (!(header instanceof HTMLElement)) {
+          return;
+        }
 
-      const shouldUseScrolledState = window.scrollY > 24;
-      header.dataset.headerScrolled = shouldUseScrolledState ? 'true' : 'false';
-    };
+        const shouldUseScrolledState = window.scrollY > 24;
+        header.dataset.headerScrolled = shouldUseScrolledState ? 'true' : 'false';
+      };
 
-    const requestHeaderStateSync = () => {
-      if (headerFrameRequested) {
-        return;
-      }
+      const requestHeaderStateSync = () => {
+        if (headerFrameRequested) {
+          return;
+        }
 
-      headerFrameRequested = true;
-      window.requestAnimationFrame(syncHeaderState);
-    };
+        headerFrameRequested = true;
+        window.requestAnimationFrame(syncHeaderState);
+      };
 
-    window.addEventListener('scroll', requestHeaderStateSync, { passive: true });
-    syncHeaderState();
+      window.addEventListener('scroll', requestHeaderStateSync, { passive: true });
+      syncHeaderState();
+    })();
   </script>
 )}

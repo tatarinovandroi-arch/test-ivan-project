@@ -10,7 +10,11 @@ interface Props {
     readonly lead: string;
     readonly primaryCta: { readonly label: string; readonly href: string };
     readonly secondaryCta?: { readonly label: string; readonly href: string };
-    readonly trust?: readonly string[];
+    readonly trust?: readonly {
+      icon?: string;
+      title: string;
+      description: string;
+    }[];
     readonly media?: {
       readonly desktop: string;
       readonly mobile?: string;
@@ -28,6 +32,14 @@ const heroClassName = ['hero', 'hero--fullscreen-visual', heroVariant.className]
 const contentClassName = ['hero__fullscreen-content', !hasTrustStrip && 'hero__fullscreen-content--no-strip']
   .filter(Boolean)
   .join(' ');
+const trustItems = hero.trust?.slice(0, 4) ?? [];
+const trustIconMap: Record<string, string> = {
+  code: '</>',
+  brand: '◇',
+  marketing: '↗',
+  support: '♧',
+};
+const resolveTrustIcon = (icon?: string) => trustIconMap[icon ?? ''] ?? '•';
 ---
 <section class={heroClassName} data-hero-layout="fullscreen-visual" aria-labelledby="hero-title" {...heroVariant.dataAttrs}>
   <div class="hero__fullscreen-shell">
@@ -54,9 +66,11 @@ const contentClassName = ['hero__fullscreen-content', !hasTrustStrip && 'hero__f
 
       {hasTrustStrip && (
         <div class="hero__fullscreen-strip" aria-label="Ключевые преимущества">
-          {hero.trust!.slice(0, 4).map((item) => (
+          {trustItems.map((item) => (
             <article class:list={['hero__fullscreen-card', cardVariant.className]} {...cardVariant.dataAttrs}>
-              <p>{item}</p>
+              <span class="hero__fullscreen-card-icon" aria-hidden="true">{resolveTrustIcon(item.icon)}</span>
+              <h3 class="hero__fullscreen-card-title">{item.title}</h3>
+              <p class="hero__fullscreen-card-description">{item.description}</p>
             </article>
           ))}
         </div>

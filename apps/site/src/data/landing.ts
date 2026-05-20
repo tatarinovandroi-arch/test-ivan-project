@@ -7,7 +7,11 @@ export type LandingHero = {
   lead: string;
   primaryCta: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
-  trust?: readonly string[];
+  trust?: readonly {
+    icon?: string;
+    title: string;
+    description: string;
+  }[];
   media?: { desktop: string; mobile?: string; alt: string; fit?: 'cover' | 'contain' };
 };
 
@@ -52,7 +56,28 @@ export const hero: LandingHero | null = {
     label: 'Подобрать тренировку',
     href: '#contact',
   },
-  trust: ['Веб-разработка', 'Брендинг', 'Маркетинг', 'Поддержка'],
+  trust: [
+    {
+      icon: 'code',
+      title: 'Веб-разработка',
+      description: 'Современные сайты и быстрые страницы под задачу.',
+    },
+    {
+      icon: 'brand',
+      title: 'Брендинг',
+      description: 'Цельный визуальный язык и аккуратная подача.',
+    },
+    {
+      icon: 'marketing',
+      title: 'Маркетинг',
+      description: 'Страницы, которые поддерживают продвижение и заявки.',
+    },
+    {
+      icon: 'support',
+      title: 'Поддержка',
+      description: 'Сопровождение после запуска и точечные доработки.',
+    },
+  ],
   media: {
     desktop: '/assets/demo/fs-hero-default.webp',
     mobile: '/assets/demo/fs-hero-mobile-default.webp',
