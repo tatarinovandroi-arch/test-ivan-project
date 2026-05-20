@@ -194,7 +194,7 @@ select {
   background: transparent;
   border-bottom-color: transparent;
   box-shadow: none;
-  color: var(--accent-on);
+  color: var(--surface-strong);
   animation: header-scroll-enter 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
   transition:
     background-color 220ms ease,
@@ -205,18 +205,18 @@ select {
 }
 
 .site-header--transparent-scroll .site-nav {
-  color: color-mix(in srgb, var(--accent-on) 88%, transparent);
+  color: color-mix(in srgb, var(--surface-strong) 88%, transparent);
 }
 
 .site-header--transparent-scroll .site-brand {
-  color: color-mix(in srgb, var(--accent-on) 96%, transparent);
-  text-shadow: 0 1px 10px color-mix(in srgb, var(--text) 28%, transparent);
+  color: color-mix(in srgb, var(--surface-strong) 96%, transparent);
+  text-shadow: 0 1px 10px color-mix(in srgb, var(--text) 34%, transparent);
 }
 
 .site-header--transparent-scroll .site-brand__mark {
-  background: color-mix(in srgb, var(--text) 82%, transparent);
-  border-color: color-mix(in srgb, var(--accent-on) 22%, transparent);
-  color: var(--accent-on);
+  background: color-mix(in srgb, var(--surface-strong) 14%, transparent);
+  border-color: color-mix(in srgb, var(--surface-strong) 22%, transparent);
+  color: var(--surface-strong);
   box-shadow: none;
 }
 
@@ -229,13 +229,13 @@ select {
 }
 
 .site-header--transparent-scroll .site-header__burger {
-  background: color-mix(in srgb, var(--text) 78%, transparent);
-  border-color: color-mix(in srgb, var(--accent-on) 18%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 10%, transparent);
+  border-color: color-mix(in srgb, var(--surface-strong) 18%, transparent);
   box-shadow: none;
 }
 
 .site-header--transparent-scroll .burger-line {
-  background: var(--accent-on);
+  background: var(--surface-strong);
 }
 
 .site-header--transparent-scroll[data-header-scrolled="true"] {
@@ -586,7 +586,7 @@ select {
     radial-gradient(circle at top left, var(--accent-page-glow), transparent 36%),
     linear-gradient(180deg, var(--text) 0%, var(--text) 100%);
   box-shadow: var(--card-shadow);
-  color: var(--accent-on);
+  color: var(--surface-strong);
   isolation: isolate;
 }
 
@@ -619,18 +619,21 @@ select {
   align-self: center;
   display: grid;
   gap: 0.85rem;
+  color: var(--surface-strong);
 }
 
 .hero__fullscreen-visual {
   grid-area: visual;
-  align-self: center;
+  align-self: stretch;
   display: flex;
+  align-items: center;
   justify-content: flex-end;
 }
 
 .hero__fullscreen-media {
   display: block;
-  width: min(100%, 36rem);
+  width: min(100%, 38rem);
+  height: 100%;
   aspect-ratio: 4 / 5;
   overflow: hidden;
   border-radius: var(--radius-media);
@@ -643,6 +646,7 @@ select {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
 .hero__fullscreen-media[data-fit="contain"] img {
@@ -656,7 +660,7 @@ select {
 }
 
 .hero--fullscreen-visual .hero__lead {
-  color: color-mix(in srgb, var(--accent-on) 92%, transparent);
+  color: color-mix(in srgb, var(--surface-strong) 88%, transparent);
 }
 
 .hero--fullscreen-visual .button--secondary,
