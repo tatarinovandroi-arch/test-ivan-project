@@ -1,0 +1,23 @@
+{
+  "name": "local-services-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "check": "astro check",
+    "build": "npm run build:demo",
+    "build:demo": "astro build && node scripts/fix-relative-assets.mjs && node scripts/copy-demo-output.mjs",
+    "finalize": "npm run check && npm run build:demo",
+    "preview": "astro preview"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "astro": "^6.0.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.8",
+    "typescript": "^5.9.3"
+  }
+}

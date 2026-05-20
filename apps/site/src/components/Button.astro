@@ -1,0 +1,19 @@
+---
+import { componentVariantMarkers } from '../data/site';
+
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { href, variant = 'primary', type = 'button', class: className = '', ...rest } = Astro.props;
+const Tag = href ? 'a' : 'button';
+const buttonVariantMarker = componentVariantMarkers.button;
+const classes = ['button', `button--${variant}`, buttonVariantMarker.className, className].filter(Boolean).join(' ');
+---
+<Tag class={classes} href={href} type={href ? undefined : type} {...rest} {...buttonVariantMarker.dataAttrs}>
+  <slot />
+</Tag>

@@ -1,0 +1,50 @@
+---
+import { hasLeadForm, siteMeta } from '../data/site';
+
+interface Props {
+  navigation: readonly { readonly label: string; readonly href: string }[];
+  links: readonly { readonly label: string; readonly href: string; readonly value: string }[];
+}
+
+const { navigation, links } = Astro.props;
+
+function toLocalSiteHref(href: string): string {
+  if (!href.startsWith('/')) return href;
+
+  const trimmed = href.replace(/^\/+/, '');
+  const segments = Astro.url.pathname.split('/').filter(Boolean);
+  const prefix = '../'.repeat(segments.length);
+  if (!trimmed) {
+    return prefix || './';
+  }
+  return `${prefix}${trimmed}`;
+}
+---
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <a href={toLocalSiteHref('/')}>{siteMeta.name}</a>
+      {siteMeta.description && <p>{siteMeta.description}</p>}
+    </div>
+
+    <nav class="site-footer__nav" aria-label="Навигация в подвале">
+      {navigation.map((item) => <a href={toLocalSiteHref(item.href)}>{item.label}</a>)}
+    </nav>
+
+    {links.length > 0 && (
+      <div class="site-footer__links" aria-label="Контакты">
+        {links.map((item) => (
+          <a href={item.href}>
+            <span>{item.label}</span>
+            <strong>{item.value}</strong>
+          </a>
+        ))}
+      </div>
+    )}
+    {hasLeadForm && (
+      <div class="site-footer__legal">
+        <a href={toLocalSiteHref('/privacy')}>Политика конфиденциальности</a>
+      </div>
+    )}
+  </div>
+</footer>

@@ -1,0 +1,152 @@
+{
+  "request_id": "301f4328-cebc-4794-af62-8a083036c60d",
+  "public_request_id": "bw_req_29efbf5e",
+  "project_slug": "local-services",
+  "run_key": "local-services--301f4328",
+  "metadata": {
+    "projectType": "landing",
+    "niche": "local-services",
+    "nicheDetail": "",
+    "companyName": "BYWORKOUT",
+    "businessDescription": "Фитнес студия.",
+    "city": "Москва",
+    "phone": "+79242494933",
+    "telegram": "@byworkout",
+    "email": "dronmsk990@gmail.com",
+    "heroLayoutPreference": "fullscreen-visual",
+    "siteStructure": "home-only",
+    "presentationBlocks": [
+      "benefits",
+      "reviews",
+      "cases",
+      "steps"
+    ],
+    "businessCapabilities": [
+      "lead-form",
+      "faq"
+    ],
+    "futureGrowth": "demo-only",
+    "style": "dark-lime-creative",
+    "stylePreset": "dark-lime-creative",
+    "shapePreset": "sharp",
+    "fontPreset": "geometric-display",
+    "colorPreset": "lime-electric",
+    "componentVariants": {},
+    "ecommerceProductCategory": "",
+    "ecommerceProductCategoryWarning": "",
+    "comment": "",
+    "resolvedVisualSystem": {
+      "stylePreset": "dark-lime-creative",
+      "colorPreset": "lime-electric",
+      "shapePreset": "sharp",
+      "fontPreset": "geometric-display",
+      "componentVariants": {
+        "header": "transparent-scroll",
+        "drawer": "left-panel",
+        "burger": "boxed",
+        "leadForm": "dark-panel",
+        "faq": "bordered-list",
+        "button": "neon-action",
+        "card": "soft-glow",
+        "hero": "media-frame",
+        "section": "bordered-band"
+      }
+    }
+  },
+  "visual_context": {
+    "hero_layout_preference": "fullscreen-visual",
+    "hero_instruction": "Use a bold fullscreen visual hero: dark background, large visual focus, and a strong first impression that relies on imagery and contrast.",
+    "font_preset": "geometric-display",
+    "font_preset_label": "Montserrat / Unbounded",
+    "font_instruction": "Use a stronger geometric display direction suitable for headings, such as Montserrat, Unbounded, or a close fallback, while keeping body text readable."
+  },
+  "visual_tokens": {
+    "font_preset": "geometric-display",
+    "shape_preset": "sharp",
+    "color_preset": "lime-electric",
+    "color": {
+      "accent": "#a3e635",
+      "accent_strong": "#65a30d",
+      "accent_on": "#0f172a",
+      "accent_soft": "rgba(163, 230, 53, 0.12)",
+      "accent_softer": "rgba(163, 230, 53, 0.06)",
+      "accent_focus": "rgba(163, 230, 53, 0.14)",
+      "accent_glow": "rgba(163, 230, 53, 0.24)",
+      "accent_gradient": "linear-gradient(135deg, #a3e635, #22c55e)",
+      "accent_hero": "#ecfccb",
+      "accent_page_glow": "rgba(34, 197, 94, 0.18)"
+    },
+    "font": {
+      "heading": "\"Montserrat\", \"Unbounded\", \"Manrope\", system-ui, sans-serif",
+      "body": "\"Manrope\", \"Inter\", system-ui, sans-serif",
+      "accent": "\"Unbounded\", \"Montserrat\", \"Manrope\", system-ui, sans-serif"
+    },
+    "shape": {
+      "radius_card": "10px",
+      "radius_button": "8px",
+      "radius_input": "8px",
+      "radius_media": "8px",
+      "radius_panel": "14px",
+      "shadow_card": "0 14px 28px -24px rgba(15, 23, 42, 0.62)"
+    },
+    "motion": {
+      "motion_fast": "150ms",
+      "motion_base": "200ms",
+      "motion_slow": "320ms",
+      "motion_ease": "cubic-bezier(0.2, 0.8, 0.2, 1)"
+    },
+    "css_variables": {
+      "--accent": "#a3e635",
+      "--accent-strong": "#65a30d",
+      "--accent-on": "#0f172a",
+      "--accent-soft": "rgba(163, 230, 53, 0.12)",
+      "--accent-softer": "rgba(163, 230, 53, 0.06)",
+      "--accent-focus": "rgba(163, 230, 53, 0.14)",
+      "--accent-glow": "rgba(163, 230, 53, 0.24)",
+      "--accent-gradient": "linear-gradient(135deg, #a3e635, #22c55e)",
+      "--accent-hero": "#ecfccb",
+      "--accent-page-glow": "rgba(34, 197, 94, 0.18)",
+      "--font-heading": "\"Montserrat\", \"Unbounded\", \"Manrope\", system-ui, sans-serif",
+      "--font-body": "\"Manrope\", \"Inter\", system-ui, sans-serif",
+      "--font-accent": "\"Unbounded\", \"Montserrat\", \"Manrope\", system-ui, sans-serif",
+      "--radius-card": "10px",
+      "--radius-button": "8px",
+      "--radius-input": "8px",
+      "--radius-media": "8px",
+      "--radius-panel": "14px",
+      "--card-shadow": "0 14px 28px -24px rgba(15, 23, 42, 0.62)",
+      "--card-border-width": "1px",
+      "--card-padding": "1rem",
+      "--motion-fast": "150ms",
+      "--motion-base": "200ms",
+      "--motion-slow": "320ms",
+      "--motion-ease": "cubic-bezier(0.2, 0.8, 0.2, 1)"
+    }
+  },
+  "architecture": {
+    "profile": "site_only",
+    "enabledApps": [
+      "site"
+    ],
+    "requiresShared": false,
+    "reason": [
+      "landing request",
+      "site-only demo scope"
+    ]
+  },
+  "request": {
+    "public_request_id": "bw_req_29efbf5e",
+    "request_kind": "initial_scaffold"
+  },
+  "product": {
+    "public_product_id": "bw_prod_d1b04c92",
+    "kind": "site",
+    "title": "Local Services"
+  },
+  "storage": {
+    "policy": "runtime_temp_plus_product_workspace",
+    "runtime_output_dir": "/srv/botweaver/generated/local-services--301f4328",
+    "product_workspace_dir": "/srv/botweaver/products/bw_prod_d1b04c92/workspace",
+    "request_scaffold_dir": "/srv/botweaver/products/bw_prod_d1b04c92/requests/bw_req_29efbf5e/scaffold"
+  }
+}

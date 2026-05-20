@@ -1,0 +1,38 @@
+---
+import Button from './Button.astro';
+import SectionHeading from './SectionHeading.astro';
+import { componentVariantMarkers } from '../data/site';
+
+interface Props {
+  title: string;
+  lead: string;
+  items: readonly {
+    readonly title: string;
+    readonly description: string;
+    readonly image: string;
+    readonly alt?: string;
+    readonly fit?: 'cover' | 'contain';
+    readonly cta?: { readonly label: string; readonly href: string };
+  }[];
+}
+
+const { title, lead, items } = Astro.props;
+const cardVariant = componentVariantMarkers.card;
+const sectionVariant = componentVariantMarkers.section;
+---
+<section class:list={['visual-cards', 'section', sectionVariant.className]} id="visual-cards" data-visual-cards {...sectionVariant.dataAttrs}>
+  <SectionHeading eyebrow="Визуальный блок" title={title} description={lead} />
+
+  <div class:list={['visual-card-grid', items.length === 4 && 'visual-card-grid--count-4']} data-grid-count={items.length}>
+    {items.map((item) => (
+      <article class:list={['visual-card', cardVariant.className]} {...cardVariant.dataAttrs}>
+        <div class="visual-card__media" data-fit={item.fit ?? 'cover'}>
+          <img src={item.image} alt={item.alt ?? item.title} />
+        </div>
+        <h3>{item.title}</h3>
+        <p>{item.description}</p>
+        {item.cta && <Button href={item.cta.href} variant="ghost" class="visual-card__cta">{item.cta.label}</Button>}
+      </article>
+    ))}
+  </div>
+</section>

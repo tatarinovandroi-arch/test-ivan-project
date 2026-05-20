@@ -1,0 +1,29 @@
+---
+import { componentVariantMarkers } from '../data/site';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props {
+  title: string;
+  lead: string;
+  items: readonly { readonly question: string; readonly answer: string }[];
+}
+
+const { title, lead, items } = Astro.props;
+const faqVariant = componentVariantMarkers.faq;
+const sectionVariant = componentVariantMarkers.section;
+const faqClassName = ['faq', 'section', sectionVariant.className, faqVariant.className].filter(Boolean).join(' ');
+---
+<section class={faqClassName} id="faq" {...sectionVariant.dataAttrs} {...faqVariant.dataAttrs}>
+  <SectionHeading eyebrow="FAQ" title={title} description={lead} />
+
+  <div class="faq__list">
+    {items.map((item) => (
+      <details class="faq__item">
+        <summary>{item.question}</summary>
+        <div class="faq__answer">
+          <div class="faq__answer-inner"><p>{item.answer}</p></div>
+        </div>
+      </details>
+    ))}
+  </div>
+</section>

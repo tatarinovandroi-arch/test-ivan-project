@@ -1,0 +1,26 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { componentVariantMarkers } from '../data/site';
+
+interface Props {
+  title: string;
+  lead: string;
+  items: readonly { readonly title: string; readonly description: string }[];
+}
+
+const { title, lead, items } = Astro.props;
+const cardVariant = componentVariantMarkers.card;
+const sectionVariant = componentVariantMarkers.section;
+---
+<section class:list={['section', sectionVariant.className]} id="benefits" {...sectionVariant.dataAttrs}>
+  <SectionHeading eyebrow="Преимущества" title={title} description={lead} />
+
+  <div class:list={['feature-grid', items.length === 4 && 'feature-grid--count-4']} data-grid-count={items.length}>
+    {items.map((item) => (
+      <article class:list={['feature-card', cardVariant.className]} {...cardVariant.dataAttrs}>
+        <h3>{item.title}</h3>
+        <p>{item.description}</p>
+      </article>
+    ))}
+  </div>
+</section>

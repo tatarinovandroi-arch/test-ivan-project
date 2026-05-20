@@ -1,0 +1,104 @@
+---
+import Button from './Button.astro';
+import { componentVariantMarkers, siteMeta } from '../data/site';
+
+interface Props {
+  navigation: readonly { readonly label: string; readonly href: string }[];
+  cta: { readonly label: string; readonly href: string };
+  position?: 'left' | 'right';
+}
+
+const { navigation, cta, position = 'left' } = Astro.props;
+const drawerVariant = componentVariantMarkers.drawer;
+const drawerPosition: 'left' | 'right' = position === 'right' ? 'right' : 'left';
+const drawerClassName = ['mobile-drawer', `mobile-drawer--${drawerPosition}`].filter(Boolean).join(' ');
+---
+<div
+  class={drawerClassName}
+  id="mobile-menu"
+  aria-hidden="true"
+  data-mobile-drawer
+  data-drawer-position={drawerPosition}
+  {...drawerVariant.dataAttrs}
+>
+  <button class="mobile-drawer__scrim" type="button" aria-label="Закрыть меню" data-drawer-close></button>
+
+  <aside class="mobile-drawer__panel" role="dialog" aria-label="Меню">
+    <div class="mobile-drawer__top">
+      <div class="mobile-drawer__brand">{siteMeta.name}</div>
+
+      <button class="mobile-drawer__close" type="button" aria-label="Закрыть меню" data-drawer-close>
+        <span class="mobile-drawer__close-line" aria-hidden="true"></span>
+        <span class="mobile-drawer__close-line" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <nav class="mobile-drawer__nav">
+      {navigation.map((item) => <a href={item.href} data-drawer-close>{item.label}</a>)}
+    </nav>
+
+    <Button href={cta.href} class="mobile-drawer__cta">{cta.label}</Button>
+  </aside>
+</div>
+
+<script>
+  const drawer = document.querySelector('[data-mobile-drawer]');
+  const toggles = document.querySelectorAll('[data-drawer-toggle]');
+  const closeTargets = document.querySelectorAll('[data-drawer-close]');
+
+  if (drawer instanceof HTMLElement) {
+    const closeDirection = drawer.dataset.drawerPosition === 'right' ? 'right' : 'left';
+
+    const setState = (open: boolean) => {
+      drawer.setAttribute('data-open', open ? 'true' : 'false');
+      drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+      document.documentElement.classList.toggle('drawer-open', open);
+
+      toggles.forEach((button) => {
+        if (button instanceof HTMLButtonElement) {
+          button.setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
+      });
+    };
+
+    toggles.forEach((button) => {
+      if (button instanceof HTMLButtonElement) {
+        button.addEventListener('click', () => {
+          setState(drawer.getAttribute('data-open') !== 'true');
+        });
+      }
+    });
+
+    closeTargets.forEach((target) => target.addEventListener('click', () => setState(false)));
+    window.addEventListener('keydown', (event) => event.key === 'Escape' && setState(false));
+
+    const panel = drawer.querySelector('.mobile-drawer__panel');
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    if (panel instanceof HTMLElement) {
+      panel.addEventListener('touchstart', (event) => {
+        const touch = event.touches[0];
+        if (!touch) return;
+
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+      }, { passive: true });
+
+      panel.addEventListener('touchend', (event) => {
+        const touch = event.changedTouches[0];
+        if (!touch) return;
+
+        const deltaX = touch.clientX - touchStartX;
+        const deltaY = touch.clientY - touchStartY;
+
+        const isHorizontalSwipe = Math.abs(deltaX) > 48 && Math.abs(deltaX) > Math.abs(deltaY) * 1.4;
+        const isClosingSwipe = closeDirection === 'right' ? deltaX > 0 : deltaX < 0;
+
+        if (isHorizontalSwipe && isClosingSwipe) {
+          setState(false);
+        }
+      }, { passive: true });
+    }
+  }
+</script>

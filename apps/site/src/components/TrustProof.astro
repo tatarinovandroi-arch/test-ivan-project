@@ -1,0 +1,26 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { componentVariantMarkers } from '../data/site';
+
+interface Props {
+  title: string;
+  lead: string;
+  items: readonly { readonly title: string; readonly description: string }[];
+}
+
+const { title, lead, items } = Astro.props;
+const cardVariant = componentVariantMarkers.card;
+const sectionVariant = componentVariantMarkers.section;
+---
+<section class:list={['section', sectionVariant.className]} id="trust" {...sectionVariant.dataAttrs}>
+  <SectionHeading eyebrow="Доверие" title={title} description={lead} />
+
+  <div class:list={['trust-proof__grid', items.length === 4 && 'trust-proof__grid--count-4']} data-grid-count={items.length}>
+    {items.map((item) => (
+      <article class:list={['trust-proof__item', cardVariant.className]} {...cardVariant.dataAttrs}>
+        <h3>{item.title}</h3>
+        <p>{item.description}</p>
+      </article>
+    ))}
+  </div>
+</section>

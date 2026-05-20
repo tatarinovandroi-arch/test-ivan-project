@@ -1,0 +1,123 @@
+---
+import Button from './Button.astro';
+import { componentVariantMarkers, leadFormTransport } from '../data/site';
+
+interface Props {
+  title: string;
+  lead: string;
+  topics?: readonly string[];
+}
+
+const { title, lead, topics = [] } = Astro.props;
+const topicOptions = topics.map((item) => item.trim()).filter(Boolean).slice(0, 8);
+const leadFormVariant = componentVariantMarkers.leadForm;
+const sectionVariant = componentVariantMarkers.section;
+const leadFormClassName = ['lead-form', sectionVariant.className, 'lead-form--compact', leadFormVariant.className].filter(Boolean).join(' ');
+---
+<section class={leadFormClassName} data-form-layout="compact" id="contact" aria-labelledby="lead-form-title" {...sectionVariant.dataAttrs} {...leadFormVariant.dataAttrs}>
+  <div class="lead-form__header">
+    <p class="section-heading__eyebrow">Заявка</p>
+    <h2 id="lead-form-title">{title}</h2>
+    <p class="lead-form__lead">{lead}</p>
+  </div>
+
+  <form
+    class="lead-form__form"
+    data-lead-form
+    data-api-mode={leadFormTransport.mode}
+    data-api-endpoint={leadFormTransport.endpoint}
+    data-loading-message={leadFormTransport.loadingMessage}
+    data-success-message={leadFormTransport.successMessage}
+    data-local-success-message={leadFormTransport.localSuccessMessage}
+    data-error-message={leadFormTransport.errorMessage}
+    novalidate
+  >
+    <div class="lead-form__fields">
+      <label class="lead-form__field">
+        <span>Ваше имя</span>
+        <input type="text" name="name" autocomplete="name" required />
+      </label>
+
+      <label class="lead-form__field">
+        <span>Телефон или Telegram</span>
+        <input type="text" name="contact" autocomplete="tel" required />
+      </label>
+
+      {topicOptions.length > 0 && (
+        <label class="lead-form__field lead-form__field--topic">
+          <span>Тема заявки</span>
+          <select name="topic" required>
+            <option value="">Выберите направление</option>
+            {topicOptions.map((topic) => <option value={topic}>{topic}</option>)}
+          </select>
+        </label>
+      )}
+
+      <label class="lead-form__field lead-form__field--message">
+        <span>Коротко опишите задачу</span>
+        <textarea name="message" rows="4" required></textarea>
+      </label>
+    </div>
+
+    <p class="lead-form__privacy">Нажимая кнопку, вы соглашаетесь на обработку данных для связи по заявке.</p>
+    <p class="lead-form__status" data-form-status aria-live="polite"></p>
+    <Button type="submit" class="lead-form__submit">Отправить заявку</Button>
+  </form>
+
+  <script>
+    const forms = document.querySelectorAll('[data-lead-form]');
+
+    forms.forEach((form) => {
+      if (!(form instanceof HTMLFormElement)) return;
+
+      const status = form.querySelector<HTMLElement>('[data-form-status]');
+      const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const defaultSubmitLabel = submit instanceof HTMLButtonElement ? submit.textContent || '' : '';
+      const loadingMessage = form.dataset.loadingMessage || 'Проверяем форму…';
+      const stubMessage =
+        form.dataset.localSuccessMessage ||
+        form.dataset.successMessage ||
+        'Форма пока не подключена. Свяжитесь с владельцем сайта удобным способом.';
+      const invalidMessage = 'Проверьте обязательные поля.';
+
+      type LeadFormState = 'idle' | 'loading' | 'success' | 'error';
+
+      const setStatus = (state: LeadFormState, message: string) => {
+        form.dataset.state = state;
+        form.setAttribute('aria-busy', state === 'loading' ? 'true' : 'false');
+
+        if (status instanceof HTMLElement) {
+          status.textContent = message;
+        }
+      };
+
+      const setSubmitLoading = (loading: boolean) => {
+        if (submit instanceof HTMLButtonElement) {
+          submit.disabled = loading;
+          submit.dataset.loading = loading ? 'true' : 'false';
+        }
+      };
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        if (!form.checkValidity()) {
+          setSubmitLoading(false);
+          setStatus('error', invalidMessage);
+          form.reportValidity();
+          return;
+        }
+
+        setSubmitLoading(true);
+        setStatus('loading', loadingMessage);
+
+        setStatus('success', stubMessage);
+        form.reset();
+        setSubmitLoading(false);
+        if (submit instanceof HTMLButtonElement) {
+          submit.textContent = defaultSubmitLabel;
+        }
+      });
+    });
+  </script>
+</section>

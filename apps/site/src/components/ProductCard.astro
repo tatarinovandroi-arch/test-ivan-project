@@ -1,0 +1,36 @@
+---
+import Button from './Button.astro';
+import { componentVariantMarkers } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  price?: string;
+  image?: string;
+  fit?: 'contain' | 'cover';
+  alt?: string;
+  href?: string;
+  cta?: string;
+}
+
+const {
+  title,
+  description,
+  price = '',
+  image = '/assets/demo/product-1.webp',
+  fit = 'contain',
+  alt = title,
+  href = '#contact',
+  cta = 'Заказать',
+} = Astro.props;
+const cardVariant = componentVariantMarkers.card;
+---
+<article class:list={['product-card', cardVariant.className]} {...cardVariant.dataAttrs}>
+  <div class="product-card__media" data-fit={fit}>
+    <img src={image} alt={alt} />
+  </div>
+  <h3>{title}</h3>
+  {price && <strong class="product-card__price">{price}</strong>}
+  <p>{description}</p>
+  <Button href={href} variant="secondary" class="product-card__cta">{cta}</Button>
+</article>

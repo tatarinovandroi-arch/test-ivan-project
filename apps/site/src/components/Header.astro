@@ -1,0 +1,75 @@
+---
+import Button from './Button.astro';
+import { componentVariantMarkers, siteMeta } from '../data/site';
+
+interface Props {
+  navigation: readonly { readonly label: string; readonly href: string }[];
+  cta: { readonly label: string; readonly href: string };
+}
+
+const { navigation, cta } = Astro.props;
+const headerVariant = componentVariantMarkers.header;
+const burgerVariant = componentVariantMarkers.burger;
+const transparentScrollMode = headerVariant.variant === 'transparent-scroll';
+const brandName = siteMeta.name.trim();
+const brandInitials = brandName ? brandName.charAt(0).toUpperCase() : 'NC';
+const headerClassName = [
+  'site-header',
+  headerVariant.className,
+].filter(Boolean).join(' ');
+const burgerClassName = ['site-header__burger', burgerVariant.className].filter(Boolean).join(' ');
+---
+<header
+  id="main-header"
+  class={headerClassName}
+  data-header-scrolled={transparentScrollMode ? 'false' : undefined}
+  {...headerVariant.dataAttrs}
+>
+  <div class="site-header__inner">
+    <a class="site-brand" href="/" aria-label={siteMeta.name}>
+      <span class="site-brand__mark" aria-hidden="true">{brandInitials}</span>
+      <span class="site-brand__text">{siteMeta.name}</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Основная навигация">
+      {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+
+    <Button href={cta.href} class="site-header__cta">{cta.label}</Button>
+
+    <button class={burgerClassName} type="button" aria-controls="mobile-menu" aria-expanded="false" aria-label="Открыть меню" data-drawer-toggle {...burgerVariant.dataAttrs}>
+      <span class="burger-line" aria-hidden="true"></span>
+      <span class="burger-line" aria-hidden="true"></span>
+      <span class="burger-line" aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+{transparentScrollMode && (
+  <script>
+    const header = document.getElementById('main-header');
+    let headerFrameRequested = false;
+
+    const syncHeaderState = () => {
+      headerFrameRequested = false;
+
+      if (!(header instanceof HTMLElement)) {
+        return;
+      }
+
+      const shouldUseScrolledState = window.scrollY > 24;
+      header.dataset.headerScrolled = shouldUseScrolledState ? 'true' : 'false';
+    };
+
+    const requestHeaderStateSync = () => {
+      if (headerFrameRequested) {
+        return;
+      }
+
+      headerFrameRequested = true;
+      window.requestAnimationFrame(syncHeaderState);
+    };
+
+    window.addEventListener('scroll', requestHeaderStateSync, { passive: true });
+    syncHeaderState();
+  </script>
+)}

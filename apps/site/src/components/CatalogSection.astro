@@ -1,0 +1,48 @@
+---
+import ProductCard from './ProductCard.astro';
+import SectionHeading from './SectionHeading.astro';
+import { componentVariantMarkers } from '../data/site';
+
+interface Props {
+  title?: string;
+  lead?: string;
+  items: readonly {
+    readonly title: string;
+    readonly description: string;
+    readonly price?: string;
+    readonly image?: string;
+    readonly fit?: 'contain' | 'cover';
+    readonly alt?: string;
+    readonly href?: string;
+    readonly cta?: string;
+  }[];
+}
+
+const { title = 'Каталог', lead = 'Карточки с изображением, описанием и быстрым переходом к заявке.', items = [] } = Astro.props;
+
+const sectionVariant = componentVariantMarkers.section;
+
+const defaultCatalogImages = [
+  '/assets/demo/product-1.webp',
+  '/assets/demo/product-2.webp',
+  '/assets/demo/product-3.webp',
+  '/assets/demo/product-4.webp',
+  '/assets/demo/category-1.webp',
+  '/assets/demo/category-2.webp',
+  '/assets/demo/category-3.webp',
+  '/assets/demo/category-4.webp',
+] as const;
+---
+<section class:list={['section', sectionVariant.className]} id="catalog" {...sectionVariant.dataAttrs}>
+  <SectionHeading eyebrow="Каталог" title={title} description={lead} />
+
+  <div class:list={['catalog-grid', items.length === 4 && 'catalog-grid--count-4']} data-grid-count={items.length}>
+    {items.map((item, index) => (
+      <ProductCard
+        {...item}
+        image={item.image ?? defaultCatalogImages[index % defaultCatalogImages.length]}
+        fit={item.fit ?? 'contain'}
+      />
+    ))}
+  </div>
+</section>

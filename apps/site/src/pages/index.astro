@@ -1,0 +1,61 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Hero from '../components/Hero.astro';
+import VisualCardsSection from '../components/VisualCardsSection.astro';
+import ServicesSection from '../components/ServicesSection.astro';
+import BenefitsSection from '../components/BenefitsSection.astro';
+import TrustProof from '../components/TrustProof.astro';
+import ProcessSection from '../components/ProcessSection.astro';
+import Faq from '../components/Faq.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { clientBrief } from '../data/client-brief';
+import { benefits, faq, hero, landingContentStatus, leadForm, services, process, trustProof, visualCards } from '../data/landing';
+import { componentVariantMarkers, siteMeta } from '../data/site';
+
+type HeroLayoutPreference = 'split' | 'immersive' | 'fullscreen-visual';
+
+const isBusinessContentReady = (landingContentStatus as string) === 'filled';
+const hasHero = Boolean(hero && hero.title.trim() && hero.lead.trim());
+const hasVisualCards = visualCards.title.trim().length > 0 && visualCards.items.length >= 3;
+const hasServices = services.title.trim().length > 0 && services.items.length > 0;
+const hasBenefits = benefits.title.trim().length > 0 && benefits.items.length > 0;
+const hasTrustProof = trustProof.title.trim().length > 0 && trustProof.items.length > 0;
+const hasProcess = process.title.trim().length > 0 && process.steps.length > 0;
+const hasFaq = faq.title.trim().length > 0 && faq.items.length > 0;
+const hasLeadForm = leadForm.title.trim().length > 0 && leadForm.lead.trim().length > 0;
+const heroLayoutPreference =
+  (hero as { layout?: HeroLayoutPreference } | null | undefined)?.layout
+  ?? clientBrief.heroLayoutPreference
+  ?? 'split';
+const cardVariant = componentVariantMarkers.card;
+const sectionVariant = componentVariantMarkers.section;
+---
+<MainLayout
+  title={siteMeta.title}
+  description={siteMeta.description}
+  immersive={heroLayoutPreference === 'immersive' || heroLayoutPreference === 'fullscreen-visual'}
+>
+  {isBusinessContentReady && hasHero && hero && <Hero hero={hero} />}
+
+  <div class:list={['page-surface', isBusinessContentReady && hasHero && heroLayoutPreference === 'immersive' && 'page-surface--overlap']}>
+    <div class="page-surface__inner">
+      {!isBusinessContentReady && (
+        <section class:list={['section', sectionVariant.className]} id="content-pending" {...sectionVariant.dataAttrs}>
+          <article class:list={['feature-card', cardVariant.className]} {...cardVariant.dataAttrs}>
+            <p class="section-heading__eyebrow">Демо</p>
+            <h1>Контент готовится</h1>
+            <p>Публичная версия появится после наполнения клиентского контента.</p>
+          </article>
+        </section>
+      )}
+
+      {isBusinessContentReady && hasVisualCards && <VisualCardsSection title={visualCards.title} lead={visualCards.lead} items={visualCards.items} />}
+      {isBusinessContentReady && hasServices && <ServicesSection title={services.title} lead={services.lead} items={services.items} />}
+      {isBusinessContentReady && hasBenefits && <BenefitsSection title={benefits.title} lead={benefits.lead} items={benefits.items} />}
+      {isBusinessContentReady && hasTrustProof && <TrustProof title={trustProof.title} lead={trustProof.lead} items={trustProof.items} />}
+      {isBusinessContentReady && hasProcess && <ProcessSection title={process.title} lead={process.lead} steps={process.steps} />}
+      {isBusinessContentReady && hasFaq && <Faq title={faq.title} lead={faq.lead} items={faq.items} />}
+      {isBusinessContentReady && hasLeadForm && <LeadForm title={leadForm.title} lead={leadForm.lead} topics={leadForm.topics} />}
+    </div>
+  </div>
+</MainLayout>

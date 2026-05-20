@@ -1,0 +1,33 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import MobileDrawer from '../components/MobileDrawer.astro';
+import { footerLinks, navigation, siteMeta } from '../data/site';
+import '../styles/site.css';
+import '../styles/visual-tokens.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  immersive?: boolean;
+}
+
+const { title = siteMeta.title, description = siteMeta.description, immersive = false } = Astro.props;
+---
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body data-shape-preset={siteMeta.shapePreset}>
+    <Header navigation={navigation} cta={siteMeta.primaryCta} />
+    <MobileDrawer navigation={navigation} cta={siteMeta.primaryCta} position={siteMeta.drawerPosition} />
+    <main class:list={['site-main', immersive && 'site-main--immersive']}>
+      <slot />
+    </main>
+    <Footer navigation={navigation} links={footerLinks} />
+  </body>
+</html>

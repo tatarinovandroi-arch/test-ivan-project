@@ -1,0 +1,16 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { componentVariantMarkers, siteMeta } from '../data/site';
+
+const cardVariant = componentVariantMarkers.card;
+const sectionVariant = componentVariantMarkers.section;
+---
+<MainLayout title={`Политика конфиденциальности | ${siteMeta.title}`}>
+  <section class:list={['section', sectionVariant.className]} {...sectionVariant.dataAttrs}>
+    <article class:list={['feature-card', cardVariant.className]} {...cardVariant.dataAttrs}>
+      <p class="section-heading__eyebrow">Политика конфиденциальности</p>
+      <h1>Политика конфиденциальности</h1>
+      <p>Это демонстрационная страница. Перед запуском сайта сюда добавляется актуальный текст политики обработки персональных данных. Данные из формы используются только для связи по заявке.</p>
+    </article>
+  </section>
+</MainLayout>
