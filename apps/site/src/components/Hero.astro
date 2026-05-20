@@ -54,7 +54,7 @@ const contentClassName = ['hero__fullscreen-content', !hasTrustStrip && 'hero__f
 
       {hasTrustStrip && (
         <div class="hero__fullscreen-strip" aria-label="Ключевые преимущества">
-          {hero.trust!.slice(0, 3).map((item) => (
+          {hero.trust!.slice(0, 4).map((item) => (
             <article class:list={['hero__fullscreen-card', cardVariant.className]} {...cardVariant.dataAttrs}>
               <p>{item}</p>
             </article>

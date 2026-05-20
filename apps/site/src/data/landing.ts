@@ -7,6 +7,7 @@ export type LandingHero = {
   lead: string;
   primaryCta: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
+  trust?: readonly string[];
   media?: { desktop: string; mobile?: string; alt: string; fit?: 'cover' | 'contain' };
 };
 
@@ -51,6 +52,7 @@ export const hero: LandingHero | null = {
     label: 'Подобрать тренировку',
     href: '#contact',
   },
+  trust: ['Веб-разработка', 'Брендинг', 'Маркетинг', 'Поддержка'],
   media: {
     desktop: '/assets/demo/fs-hero-default.webp',
     mobile: '/assets/demo/fs-hero-mobile-default.webp',
