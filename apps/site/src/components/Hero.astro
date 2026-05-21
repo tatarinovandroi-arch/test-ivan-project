@@ -39,6 +39,10 @@ const trustIconMap: Record<string, string> = {
   marketing: '↗',
   support: '◎',
 };
+const heroTitleWords = hero.title.trim().split(/\s+/).filter(Boolean);
+const heroTitleAccentWordCount = Math.min(heroTitleWords.length > 2 ? 2 : 1, heroTitleWords.length);
+const heroTitleBase = heroTitleWords.slice(0, -heroTitleAccentWordCount).join(' ');
+const heroTitleAccent = heroTitleWords.slice(-heroTitleAccentWordCount).join(' ');
 const resolveTrustIcon = (icon?: string) => trustIconMap[icon ?? ''] ?? '•';
 ---
 <section class={heroClassName} data-hero-layout="fullscreen-visual" aria-labelledby="hero-title" {...heroVariant.dataAttrs}>
@@ -56,7 +60,10 @@ const resolveTrustIcon = (icon?: string) => trustIconMap[icon ?? ''] ?? '•';
     <div class={contentClassName}>
       <div class="hero__fullscreen-copy">
         <p class="hero__eyebrow">{hero.eyebrow}</p>
-        <h1 id="hero-title">{hero.title}</h1>
+        <h1 id="hero-title">
+          {heroTitleBase && <>{heroTitleBase} </>}
+          {heroTitleAccent && <span class="hero__title-accent">{heroTitleAccent}</span>}
+        </h1>
         <p class="hero__lead">{hero.lead}</p>
         <div class="hero__actions">
           <Button href={hero.primaryCta.href}>{hero.primaryCta.label}</Button>

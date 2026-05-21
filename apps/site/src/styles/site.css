@@ -354,6 +354,36 @@ select {
   font-size: 0.95rem;
 }
 
+.site-header .site-nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding-block: 0.35rem;
+}
+
+.site-header .site-nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--accent-gradient);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition:
+    opacity var(--motion-fast, 150ms) var(--motion-ease, ease),
+    transform var(--motion-base, 200ms) var(--motion-ease, ease);
+}
+
+.site-header .site-nav a:hover::after,
+.site-header .site-nav a:focus-visible::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
 .site-header__cta {
   justify-self: end;
 }
@@ -465,6 +495,10 @@ select {
   font-size: clamp(2.2rem, 4.5vw, 4rem);
   line-height: 0.98;
   letter-spacing: -0.06em;
+}
+
+.hero__title-accent {
+  color: var(--accent);
 }
 
 .hero__lead,
@@ -599,17 +633,10 @@ select {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background:
-    linear-gradient(90deg,
-      color-mix(in srgb, var(--text) 98%, transparent) 0%,
-      color-mix(in srgb, var(--text) 90%, transparent) 28%,
-      color-mix(in srgb, var(--text) 72%, transparent) 48%,
-      color-mix(in srgb, var(--text) 36%, transparent) 72%,
-      transparent 100%),
-    linear-gradient(180deg,
-      color-mix(in srgb, var(--text) 58%, transparent) 0%,
-      transparent 34%,
-      color-mix(in srgb, var(--text) 84%, transparent) 100%);
+  background: linear-gradient(180deg,
+      color-mix(in srgb, var(--text) 20%, transparent) 0%,
+      transparent 45%,
+      color-mix(in srgb, var(--text) 62%, transparent) 100%);
   pointer-events: none;
 }
 
