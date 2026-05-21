@@ -18,7 +18,7 @@ body {
 :root {
   color-scheme: light;
   --page-width: min(1120px, calc(100% - 2rem));
-  --page-surface: linear-gradient(180deg, #f8fafc 0%, #f5f7fb 100%);
+  --page-surface: #f8fafc;
   --text: #0f172a;
   --muted: #475569;
   --line: rgba(148, 163, 184, 0.24);
@@ -153,12 +153,7 @@ select {
   position: relative;
   z-index: 2;
   width: 100%;
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--accent-softer) 42%, var(--page-surface)) 0%,
-      var(--page-surface) 18rem
-    );
+  background: var(--page-surface);
 }
 
 .page-surface__inner {
@@ -934,7 +929,7 @@ select {
   border: var(--card-border-width) solid color-mix(in srgb, var(--accent-glow) 42%, var(--line));
   border-radius: var(--radius-card);
   background: var(--surface);
-  box-shadow: none;
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--text) 7%, transparent);
 }
 
 .service-card,
@@ -947,13 +942,31 @@ select {
 
 .service-card {
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
   align-content: stretch;
   min-height: 100%;
+  gap: 0.75rem;
+}
+
+.service-card span {
+  min-height: 1.25rem;
+  margin-bottom: 0;
+}
+
+.service-card h3 {
+  display: -webkit-box;
+  overflow: hidden;
+  min-height: calc(1.18em * 2);
+  margin: 0;
+  line-height: 1.18;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .service-card p {
-  margin-bottom: 0;
+  margin: 0;
+  align-self: start;
 }
 
 .service-card__cta {
@@ -982,7 +995,7 @@ select {
 .card--variant-soft-glow {
   background: var(--surface);
   border-color: var(--accent-glow);
-  box-shadow: none;
+  box-shadow: 0 0 0 var(--card-border-width) var(--accent-glow), var(--card-shadow);
 }
 
 .card--variant-comic-panel {
