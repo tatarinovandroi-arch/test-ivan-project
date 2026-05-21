@@ -7,6 +7,8 @@ interface Props {
 }
 
 const { navigation, links } = Astro.props;
+const brandName = siteMeta.name.trim();
+const brandInitials = brandName ? brandName.charAt(0).toUpperCase() : 'NC';
 
 function toLocalSiteHref(href: string): string {
   if (!href.startsWith('/')) return href;
@@ -23,7 +25,10 @@ function toLocalSiteHref(href: string): string {
 <footer class="site-footer">
   <div class="site-footer__inner">
     <div class="site-footer__brand">
-      <a href={toLocalSiteHref('/')}>{siteMeta.name}</a>
+      <a class="site-footer__brand-link" href={toLocalSiteHref('/')} aria-label={siteMeta.name}>
+        <span class="site-footer__brand-mark" aria-hidden="true">{brandInitials}</span>
+        <span class="site-footer__brand-text">{siteMeta.name}</span>
+      </a>
       {siteMeta.description && <p>{siteMeta.description}</p>}
     </div>
 
