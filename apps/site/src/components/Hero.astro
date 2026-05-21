@@ -43,6 +43,16 @@ const resolveTrustIcon = (icon?: string) => trustIconMap[icon ?? ''] ?? '•';
 ---
 <section class={heroClassName} data-hero-layout="fullscreen-visual" aria-labelledby="hero-title" {...heroVariant.dataAttrs}>
   <div class="hero__fullscreen-shell">
+    <div class="hero__fullscreen-visual">
+      <picture class="hero__fullscreen-media" data-fit={hero.media?.fit ?? 'cover'}>
+        <source
+          media="(max-width: 768px)"
+          srcset={hero.media?.mobile ?? '/assets/demo/fs-hero-mobile-default.webp'}
+        />
+        <img src={hero.media?.desktop ?? '/assets/demo/fs-hero-default.webp'} alt={hero.media?.alt ?? hero.title} />
+      </picture>
+    </div>
+
     <div class={contentClassName}>
       <div class="hero__fullscreen-copy">
         <p class="hero__eyebrow">{hero.eyebrow}</p>
@@ -52,16 +62,6 @@ const resolveTrustIcon = (icon?: string) => trustIconMap[icon ?? ''] ?? '•';
           <Button href={hero.primaryCta.href}>{hero.primaryCta.label}</Button>
           {hero.secondaryCta && <Button href={hero.secondaryCta.href} variant="secondary">{hero.secondaryCta.label}</Button>}
         </div>
-      </div>
-
-      <div class="hero__fullscreen-visual">
-        <picture class="hero__fullscreen-media" data-fit={hero.media?.fit ?? 'cover'}>
-          <source
-            media="(max-width: 768px)"
-            srcset={hero.media?.mobile ?? '/assets/demo/fs-hero-mobile-default.webp'}
-          />
-          <img src={hero.media?.desktop ?? '/assets/demo/fs-hero-default.webp'} alt={hero.media?.alt ?? hero.title} />
-        </picture>
       </div>
 
       {hasTrustStrip && (
