@@ -56,6 +56,10 @@ export const hero: LandingHero | null = {
     label: 'Подобрать тренировку',
     href: '#contact',
   },
+  secondaryCta: {
+    label: 'Смотреть форматы',
+    href: '#services',
+  },
   trust: [
     {
       icon: 'code',
