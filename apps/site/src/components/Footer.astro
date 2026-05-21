@@ -24,32 +24,37 @@ function toLocalSiteHref(href: string): string {
 ---
 <footer class="site-footer">
   <div class="site-footer__inner">
-    <div class="site-footer__brand">
-      <a class="site-footer__brand-link" href={toLocalSiteHref('/')} aria-label={siteMeta.name}>
-        <span class="site-footer__brand-mark" aria-hidden="true">{brandInitials}</span>
-        <span class="site-footer__brand-text">{siteMeta.name}</span>
-      </a>
-      {siteMeta.description && <p>{siteMeta.description}</p>}
+    <div class="site-footer__left">
+      <div class="site-footer__brand">
+        <a class="site-footer__brand-link" href={toLocalSiteHref('/')} aria-label={siteMeta.name}>
+          <span class="site-footer__brand-mark" aria-hidden="true">{brandInitials}</span>
+          <span class="site-footer__brand-text">{siteMeta.name}</span>
+        </a>
+        {siteMeta.description && <p>{siteMeta.description}</p>}
+      </div>
+
+      {hasLeadForm && (
+        <div class="site-footer__legal">
+          <a href={toLocalSiteHref('/privacy')}>Политика конфиденциальности</a>
+        </div>
+      )}
     </div>
 
-    <nav class="site-footer__nav" aria-label="Навигация в подвале">
-      {navigation.map((item) => <a href={toLocalSiteHref(item.href)}>{item.label}</a>)}
-    </nav>
+    <div class="site-footer__right">
+      <nav class="site-footer__nav" aria-label="Навигация в подвале">
+        {navigation.map((item) => <a href={toLocalSiteHref(item.href)}>{item.label}</a>)}
+      </nav>
 
-    {links.length > 0 && (
-      <div class="site-footer__links" aria-label="Контакты">
-        {links.map((item) => (
-          <a href={item.href}>
-            <span>{item.label}</span>
-            <strong>{item.value}</strong>
-          </a>
-        ))}
-      </div>
-    )}
-    {hasLeadForm && (
-      <div class="site-footer__legal">
-        <a href={toLocalSiteHref('/privacy')}>Политика конфиденциальности</a>
-      </div>
-    )}
+      {links.length > 0 && (
+        <div class="site-footer__links" aria-label="Контакты">
+          {links.map((item) => (
+            <a href={item.href}>
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
   </div>
 </footer>
