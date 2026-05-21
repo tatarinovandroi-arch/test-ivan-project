@@ -7,6 +7,7 @@ export type LandingHero = {
   lead: string;
   primaryCta: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
+  supportText?: readonly string[];
   trust?: readonly {
     icon?: string;
     title: string;
@@ -60,6 +61,11 @@ export const hero: LandingHero | null = {
     label: 'Смотреть форматы',
     href: '#services',
   },
+  supportText: [
+    'Персональные и групповые тренировки под уровень подготовки.',
+    'Поможем выбрать формат и комфортно начать без перегруза.',
+    'Запись через форму, телефон или Telegram.',
+  ],
   trust: [
     {
       icon: 'code',

@@ -556,6 +556,22 @@ select {
   min-height: 52px;
   padding: 0.9rem 1.2rem;
   font-size: 0.96rem;
+  transition:
+    transform var(--motion-base, 200ms) var(--motion-ease, ease),
+    filter var(--motion-fast, 150ms) var(--motion-ease, ease);
+}
+
+.site-header .button--primary:hover,
+.hero--fullscreen-visual .button--primary:hover,
+.hero--fullscreen-visual .button--secondary:hover {
+  transform: translateY(-1px) scale(1.025);
+  filter: brightness(1.04);
+}
+
+.site-header .button--primary:active,
+.hero--fullscreen-visual .button--primary:active,
+.hero--fullscreen-visual .button--secondary:active {
+  transform: translateY(0) scale(0.99);
 }
 
 .button--secondary,
@@ -723,6 +739,35 @@ select {
   color: color-mix(in srgb, var(--surface-strong) 88%, transparent);
 }
 
+.hero__support-text {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 38rem;
+  color: color-mix(in srgb, var(--surface-strong) 78%, transparent);
+  font-size: clamp(0.95rem, 0.7vw + 0.82rem, 1.05rem);
+  line-height: 1.55;
+}
+
+.hero__support-text li {
+  position: relative;
+  padding-left: 1.1rem;
+}
+
+.hero__support-text li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
 .hero--fullscreen-visual .button--secondary,
 .hero--fullscreen-visual .button--ghost {
   color: var(--text);
@@ -735,7 +780,6 @@ select {
 .hero--fullscreen-visual .button--ghost:hover {
   color: var(--text);
   background: var(--surface-strong);
-  border-color: var(--accent-glow);
 }
 
 .hero__fullscreen-strip {
@@ -1296,7 +1340,7 @@ select {
 .mobile-drawer {
   position: fixed;
   inset: 0;
-  z-index: 50;
+  z-index: 120;
   pointer-events: none;
   overflow: hidden;
 }
@@ -1508,16 +1552,20 @@ select {
   }
 
   .hero--fullscreen-visual .hero__actions {
-    align-self: end;
+    position: absolute;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    z-index: 4;
     display: grid;
     gap: 0.65rem;
-    width: 100%;
-    padding-bottom: 0.25rem;
+    width: auto;
+    padding-bottom: 0;
   }
 
   .hero--fullscreen-visual .hero__actions .button {
     width: 100%;
-    min-height: 50px;
+    min-height: 52px;
   }
 
   .hero__fullscreen-content {
@@ -1538,8 +1586,10 @@ select {
   }
 
   .hero__fullscreen-copy {
+    position: static;
     max-width: none;
     gap: 0.75rem;
+    padding-bottom: 8.5rem;
   }
 
   .hero__fullscreen-visual {
