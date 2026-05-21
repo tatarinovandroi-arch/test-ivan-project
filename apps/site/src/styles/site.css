@@ -222,7 +222,7 @@ select {
 .site-header--transparent-scroll .site-brand__mark {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.22);
-  color: var(--surface-strong);
+  color: var(--accent);
   box-shadow: none;
 }
 
@@ -329,7 +329,7 @@ select {
   border: var(--card-border-width) solid var(--line);
   border-radius: calc(var(--radius-button) - 2px);
   background: var(--surface-strong);
-  color: var(--accent-strong);
+  color: var(--accent);
   box-shadow: var(--card-shadow);
   font-size: 0.84rem;
   font-weight: 900;
@@ -548,6 +548,10 @@ select {
 .button--primary {
   color: var(--accent-on);
   background: var(--accent-gradient);
+}
+
+.hero--fullscreen-visual .button--primary {
+  min-height: 44px;
 }
 
 .button--secondary,
