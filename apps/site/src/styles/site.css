@@ -934,7 +934,7 @@ select {
   border: var(--card-border-width) solid color-mix(in srgb, var(--accent-glow) 42%, var(--line));
   border-radius: var(--radius-card);
   background: var(--surface);
-  box-shadow: var(--card-shadow);
+  box-shadow: none;
 }
 
 .service-card,
@@ -943,6 +943,22 @@ select {
 .trust-proof__item,
 .product-card {
   padding: var(--card-padding);
+}
+
+.service-card {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  align-content: stretch;
+  min-height: 100%;
+}
+
+.service-card p {
+  margin-bottom: 0;
+}
+
+.service-card__cta {
+  align-self: end;
+  margin-top: 1rem;
 }
 
 .card--variant-default {
@@ -966,7 +982,7 @@ select {
 .card--variant-soft-glow {
   background: var(--surface);
   border-color: var(--accent-glow);
-  box-shadow: 0 0 0 var(--card-border-width) var(--accent-glow), var(--card-shadow);
+  box-shadow: none;
 }
 
 .card--variant-comic-panel {
